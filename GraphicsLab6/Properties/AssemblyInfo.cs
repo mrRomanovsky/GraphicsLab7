@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("GraphicsLab7")]
+[assembly: AssemblyTitle("GraphicsLab6")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GraphicsLab7")]
+[assembly: AssemblyProduct("GraphicsLab6")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("80698eac-9929-46f1-ad87-68c9d7e5644c")]
+[assembly: Guid("6ec70650-1bb7-4d3e-b117-2376bd079512")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

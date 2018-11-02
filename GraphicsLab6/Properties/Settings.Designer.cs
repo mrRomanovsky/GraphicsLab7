@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GraphicsLab7.Properties
+namespace GraphicsLab6.Properties
 {
 
 
