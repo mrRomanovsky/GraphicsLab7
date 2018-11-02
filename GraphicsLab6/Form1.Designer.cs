@@ -126,6 +126,7 @@
             this.task1Button.TabIndex = 8;
             this.task1Button.Text = "task1";
             this.task1Button.UseVisualStyleBackColor = true;
+            this.task1Button.Click += new System.EventHandler(this.task1Button_Click);
             // 
             // Form1
             // 

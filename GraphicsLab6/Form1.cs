@@ -7,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
+using AdjacentPoints = System.Tuple<int, System.Collections.Generic.List<System.Tuple<int, int>>>;
+
 
 namespace GraphicsLab6
 {
@@ -96,6 +100,7 @@ namespace GraphicsLab6
 
         }
 
+        #region selectListbox
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (listBox2.Text)
@@ -171,6 +176,7 @@ namespace GraphicsLab6
 
             }
         }
+        #endregion
 
         #region task2
         private List<string> activeItems = new List<string>();
@@ -390,126 +396,223 @@ namespace GraphicsLab6
         //    }
         //}
 
-    //    private void TurnFigure()
-    //    {
-    //        var t1 = double.Parse(tasksPanels[0].Controls.Find("task2AngleTextBox", false).First().Text);
-    //        var matrix = new double[,] { { Math.Cos(Math.PI * t1 / 180), Math.Sin(Math.PI * t1 / 180), 0 }, { -Math.Sin(Math.PI * t1 / 180), Math.Cos(Math.PI * t1 / 180), 0 }, { 0, 0, 1 } };
-    //        switch (figType)
-    //        {
-    //            case FigType.Point:
-    //                break;
-    //            case FigType.Segment:
-    //                DrawSegment(segment, new Pen(this.BackColor));
-    //                var res1 = MultMatrix(new double[,] { { segment.start.X, segment.start.Y, 1 }, { segment.end.X, segment.end.Y, 1 } }, matrix);
-    //                if (CheckCorrectPoint(res1[0, 0], res1[0, 1]) && CheckCorrectPoint(res1[1, 0], res1[1, 1]))
-    //                {
-    //                    segment.start = new Point((int)res1[0, 0], (int)res1[0, 1]);
-    //                    segment.end = new Point((int)res1[1, 0], (int)res1[1, 1]);
-    //                }
-    //                DrawSegment(segment, redPen);
-    //                pictureBox1.Invalidate();
-    //                break;
-    //            case FigType.Polygon:
-    //                DrawPolygon(polygon, new Pen(this.BackColor));
-    //                double[,] matrix2 = new double[polygon.corners.Count, 3];
-    //                for (int i = 0; i < polygon.corners.Count; ++i)
-    //                {
-    //                    matrix2[i, 0] = polygon.corners[i].X;
-    //                    matrix2[i, 1] = polygon.corners[i].Y;
-    //                    matrix2[i, 2] = 1;
-    //                }
-    //                var res2 = MultMatrix(matrix2, matrix);
-    //                bool correctValue = true;
-    //                var p = new Polygon();
-    //                for (int i = 0; i < polygon.corners.Count(); ++i)
-    //                {
-    //                    if (!CheckCorrectPoint(res2[i, 0], res2[i, 1]))
-    //                    {
-    //                        correctValue = false;
-    //                        break;
-    //                    }
-    //                    p.corners.Add(new Point((int)res2[i, 0], (int)res2[i, 1]));
-    //                }
-    //                if (correctValue)
-    //                {
-    //                    polygon = p;
-    //                }
-    //                DrawPolygon(polygon, redPen);
-    //                pictureBox1.Invalidate(); break;
-    //            default:
-    //                break;
-    //        }
-    //    }
+        //    private void TurnFigure()
+        //    {
+        //        var t1 = double.Parse(tasksPanels[0].Controls.Find("task2AngleTextBox", false).First().Text);
+        //        var matrix = new double[,] { { Math.Cos(Math.PI * t1 / 180), Math.Sin(Math.PI * t1 / 180), 0 }, { -Math.Sin(Math.PI * t1 / 180), Math.Cos(Math.PI * t1 / 180), 0 }, { 0, 0, 1 } };
+        //        switch (figType)
+        //        {
+        //            case FigType.Point:
+        //                break;
+        //            case FigType.Segment:
+        //                DrawSegment(segment, new Pen(this.BackColor));
+        //                var res1 = MultMatrix(new double[,] { { segment.start.X, segment.start.Y, 1 }, { segment.end.X, segment.end.Y, 1 } }, matrix);
+        //                if (CheckCorrectPoint(res1[0, 0], res1[0, 1]) && CheckCorrectPoint(res1[1, 0], res1[1, 1]))
+        //                {
+        //                    segment.start = new Point((int)res1[0, 0], (int)res1[0, 1]);
+        //                    segment.end = new Point((int)res1[1, 0], (int)res1[1, 1]);
+        //                }
+        //                DrawSegment(segment, redPen);
+        //                pictureBox1.Invalidate();
+        //                break;
+        //            case FigType.Polygon:
+        //                DrawPolygon(polygon, new Pen(this.BackColor));
+        //                double[,] matrix2 = new double[polygon.corners.Count, 3];
+        //                for (int i = 0; i < polygon.corners.Count; ++i)
+        //                {
+        //                    matrix2[i, 0] = polygon.corners[i].X;
+        //                    matrix2[i, 1] = polygon.corners[i].Y;
+        //                    matrix2[i, 2] = 1;
+        //                }
+        //                var res2 = MultMatrix(matrix2, matrix);
+        //                bool correctValue = true;
+        //                var p = new Polygon();
+        //                for (int i = 0; i < polygon.corners.Count(); ++i)
+        //                {
+        //                    if (!CheckCorrectPoint(res2[i, 0], res2[i, 1]))
+        //                    {
+        //                        correctValue = false;
+        //                        break;
+        //                    }
+        //                    p.corners.Add(new Point((int)res2[i, 0], (int)res2[i, 1]));
+        //                }
+        //                if (correctValue)
+        //                {
+        //                    polygon = p;
+        //                }
+        //                DrawPolygon(polygon, redPen);
+        //                pictureBox1.Invalidate(); break;
+        //            default:
+        //                break;
+        //        }
+        //    }
 
-    //    void MoveFigure()
-    //    {
-    //        var t1 = tasksPanels[0].Controls.Find("task2XTextBox", false).First().Text;
-    //        var t2 = tasksPanels[0].Controls.Find("task2YTextBox", false).First().Text;
-    //        var matrix = new int[,] { { 1, 0, 0 }, { 0, 1, 0 }, { int.Parse(t1), int.Parse(t2), 1 } };
-    //        switch (figType)
-    //        {
-    //            case FigType.Point:
-    //                ((Bitmap)pictureBox1.Image).SetPixel(point.X, point.Y, this.BackColor);
-    //                var res = MultMatrix(new int[,] { { point.X, point.Y, 1 } }, matrix);
-    //                if (CheckCorrectPoint(res[0, 0], res[0, 1]))
-    //                    point = new Point(res[0, 0], res[0, 1]);
-    //                ((Bitmap)pictureBox1.Image).SetPixel(point.X, point.Y, redPen.Color);
-    //                pictureBox1.Invalidate();
-    //                break;
-    //            case FigType.Segment:
-    //                DrawSegment(segment, new Pen(this.BackColor));
-    //                var res1 = MultMatrix(new int[,] { { segment.start.X, segment.start.Y, 1 }, { segment.end.X, segment.end.Y, 1 } }, matrix);
-    //                if (CheckCorrectPoint(res1[0, 0], res1[0, 1]) && CheckCorrectPoint(res1[1, 0], res1[1, 1]))
-    //                {
-    //                    segment.start = new Point(res1[0, 0], res1[0, 1]);
-    //                    segment.end = new Point(res1[1, 0], res1[1, 1]);
-    //                }
-    //                DrawSegment(segment, redPen);
-    //                pictureBox1.Invalidate();
-    //                break;
-    //            case FigType.Polygon:
-    //                DrawPolygon(polygon, new Pen(this.BackColor));
-    //                int[,] matrix2 = new int[polygon.corners.Count, 3];
-    //                for (int i = 0; i < polygon.corners.Count; ++i)
-    //                {
-    //                    matrix2[i, 0] = polygon.corners[i].X;
-    //                    matrix2[i, 1] = polygon.corners[i].Y;
-    //                    matrix2[i, 2] = 1;
-    //                }
-    //                var res2 = MultMatrix(matrix2, matrix);
-    //                bool correctValue = true;
-    //                var p = new Polygon();
-    //                for (int i = 0; i < polygon.corners.Count(); ++i)
-    //                {
-    //                    if (!CheckCorrectPoint(res2[i, 0], res2[i, 1]))
-    //                    {
-    //                        correctValue = false;
-    //                        break;
-    //                    }
-    //                    p.corners.Add(new Point(res2[i, 0], res2[i, 1]));
-    //                }
-    //                if (correctValue)
-    //                {
-    //                    polygon = p;
-    //                }
-    //                DrawPolygon(polygon, redPen);
-    //                pictureBox1.Invalidate();
-    //                break;
-    //            default:
-    //                break;
-    //        }
-    //    }
+        //    void MoveFigure()
+        //    {
+        //        var t1 = tasksPanels[0].Controls.Find("task2XTextBox", false).First().Text;
+        //        var t2 = tasksPanels[0].Controls.Find("task2YTextBox", false).First().Text;
+        //        var matrix = new int[,] { { 1, 0, 0 }, { 0, 1, 0 }, { int.Parse(t1), int.Parse(t2), 1 } };
+        //        switch (figType)
+        //        {
+        //            case FigType.Point:
+        //                ((Bitmap)pictureBox1.Image).SetPixel(point.X, point.Y, this.BackColor);
+        //                var res = MultMatrix(new int[,] { { point.X, point.Y, 1 } }, matrix);
+        //                if (CheckCorrectPoint(res[0, 0], res[0, 1]))
+        //                    point = new Point(res[0, 0], res[0, 1]);
+        //                ((Bitmap)pictureBox1.Image).SetPixel(point.X, point.Y, redPen.Color);
+        //                pictureBox1.Invalidate();
+        //                break;
+        //            case FigType.Segment:
+        //                DrawSegment(segment, new Pen(this.BackColor));
+        //                var res1 = MultMatrix(new int[,] { { segment.start.X, segment.start.Y, 1 }, { segment.end.X, segment.end.Y, 1 } }, matrix);
+        //                if (CheckCorrectPoint(res1[0, 0], res1[0, 1]) && CheckCorrectPoint(res1[1, 0], res1[1, 1]))
+        //                {
+        //                    segment.start = new Point(res1[0, 0], res1[0, 1]);
+        //                    segment.end = new Point(res1[1, 0], res1[1, 1]);
+        //                }
+        //                DrawSegment(segment, redPen);
+        //                pictureBox1.Invalidate();
+        //                break;
+        //            case FigType.Polygon:
+        //                DrawPolygon(polygon, new Pen(this.BackColor));
+        //                int[,] matrix2 = new int[polygon.corners.Count, 3];
+        //                for (int i = 0; i < polygon.corners.Count; ++i)
+        //                {
+        //                    matrix2[i, 0] = polygon.corners[i].X;
+        //                    matrix2[i, 1] = polygon.corners[i].Y;
+        //                    matrix2[i, 2] = 1;
+        //                }
+        //                var res2 = MultMatrix(matrix2, matrix);
+        //                bool correctValue = true;
+        //                var p = new Polygon();
+        //                for (int i = 0; i < polygon.corners.Count(); ++i)
+        //                {
+        //                    if (!CheckCorrectPoint(res2[i, 0], res2[i, 1]))
+        //                    {
+        //                        correctValue = false;
+        //                        break;
+        //                    }
+        //                    p.corners.Add(new Point(res2[i, 0], res2[i, 1]));
+        //                }
+        //                if (correctValue)
+        //                {
+        //                    polygon = p;
+        //                }
+        //                DrawPolygon(polygon, redPen);
+        //                pictureBox1.Invalidate();
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
 
-    //private void task2ButtonOk_Click(object sender, EventArgs e)
-    //    {
-    //        if (mode == "move")
-    //            MoveFigure();
-    //        else if (mode == "turn")
-    //            TurnFigure();
-    //        else if (mode == "scale")
-    //            ScaleFigure();
-    //    }
+        //private void task2ButtonOk_Click(object sender, EventArgs e)
+        //    {
+        //        if (mode == "move")
+        //            MoveFigure();
+        //        else if (mode == "turn")
+        //            TurnFigure();
+        //        else if (mode == "scale")
+        //            ScaleFigure();
+        //    }
 
         #endregion
+
+        private void task1Button_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void ReadPolyhedronFromFile(string filepath)
+        {
+            var edgesLines = File.ReadAllLines(filepath);
+            int edgeVertexCount = edgesLines[0].Split('|').Length - 1;
+            var edgesPoints = new Point3D[edgesLines.Length, edgeVertexCount - 1];
+            var edgesAdjacentPoints = new List<AdjacentPoints>[edgesLines.Length];
+            for (int i = 0; i < edgesLines.Length; ++i)
+            {
+                var edgeInfo = SplitEdgeInfo(edgesLines[i]);
+                ParseEdge(edgeInfo.Item1, i, edgesPoints);
+                foreach (var adjacentEdgeInfo in edgeInfo.Item2.Split('E'))
+                    edgesAdjacentPoints[i].Add(ParseAdjacentPoints(adjacentEdgeInfo, i));
+            }
+            AddAdjacentNeighbours(edgesPoints, edgesAdjacentPoints);
+        }
+
+        private Polyhedron BuildPolyhedronFromPoints(Point3D[,] points)
+        {
+            //TODO: build polyhedron from points
+            return new Polyhedron(PolyhedronType.Dodecahedron, -20);
+        }
+
+        private void AddAdjacentNeighbours(Point3D[,] edgesPoints, List<AdjacentPoints>[] adjacentPoints)
+        {
+            for (int i = 0; i < edgesPoints.GetLength(0); ++i)
+                AddEdgeNeighbours(edgesPoints, i, adjacentPoints[i]);
+        }
+
+
+        private void AddEdgeNeighbours(Point3D[,] edgesPoints, int edgeNumber, List<AdjacentPoints> adjacentPointsLst)
+        {
+            foreach (var adjacentPoints in adjacentPointsLst)
+                foreach (var adjIdxs in adjacentPoints.Item2)
+                    edgesPoints[edgeNumber, adjIdxs.Item1].AddNeighbour(edgesPoints[adjacentPoints.Item1, adjIdxs.Item2]);
+        }
+
+        private AdjacentPoints ParseAdjacentPoints(string adjacentString, int edgeNumber)
+        {
+            var adjacentStrSplitted = adjacentString.Split(':');
+            int adjacentEdgeIdx = int.Parse(adjacentStrSplitted[0]);
+            var adjacentList = adjacentStrSplitted[1];
+            int firstIdx = 0;
+            int lastIdx = adjacentList.IndexOf(')', firstIdx + 1);
+            var adjacentVertices = new List<Tuple<int, int>>();
+            while (true)
+            {
+                var numbersStrs = adjacentList.Substring(firstIdx + 1, lastIdx - firstIdx - 1).Split(',');
+                adjacentVertices.Add(new Tuple<int, int>(int.Parse(numbersStrs[0]), int.Parse(numbersStrs[1])));
+                if (lastIdx == adjacentList.Length - 1)
+                    break;
+                firstIdx = lastIdx + 2;
+                lastIdx = adjacentList.IndexOf(')', firstIdx + 1);
+            }
+            //adjacentPoints[edgeNumber] = new AdjacentPoints(adjacentEdgeIdx, adjacentVertices);
+            return new AdjacentPoints(adjacentEdgeIdx, adjacentVertices);
+        }
+
+        private Tuple<String, String> SplitEdgeInfo(string edgeInfo)
+        {
+            int lastSepIdx = edgeInfo.Length - 1;
+            while (edgeInfo[lastSepIdx] != '|')
+                --lastSepIdx;
+            return new Tuple<string, string>(edgeInfo.Substring(0, lastSepIdx), edgeInfo.Substring(lastSepIdx + 1));
+        }
+
+        private void ParseEdge(string edgeStr, int edgeNumber, Point3D[,] pointsList)
+        {
+            var pointsAndAdjacentVertexStr = edgeStr.Split('|').ToArray();
+            for (int i = 0; i < pointsAndAdjacentVertexStr.Length - 1; ++i)
+            {
+                pointsList[edgeNumber, i] = ParsePoint(pointsAndAdjacentVertexStr[i]);
+                if (i > 0)
+                {
+                    pointsList[edgeNumber, i].AddNeighbour(pointsList[edgeNumber, i - 1]);
+                    pointsList[edgeNumber, i - 1].AddNeighbour(pointsList[edgeNumber, i]);
+                }
+            }
+            pointsList[edgeNumber, 0].AddNeighbour(pointsList[edgeNumber, pointsList.GetLength(1) - 1]);
+            pointsList[edgeNumber, pointsList.GetLength(1) - 1].AddNeighbour(pointsList[edgeNumber, 0]);
+        }
+
+
+        private Point3D ParsePoint(string pointStr)
+        {
+            var pointCoords = pointStr.Split(';');
+            var xCoord = double.Parse(pointCoords[0]);
+            var yCoord = double.Parse(pointCoords[1]);
+            var zCoord = double.Parse(pointCoords[2]);
+            return new Point3D(xCoord, yCoord, zCoord);
+        }
     }
 }
