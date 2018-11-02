@@ -614,5 +614,11 @@ namespace GraphicsLab6
             var zCoord = double.Parse(pointCoords[2]);
             return new Point3D(xCoord, yCoord, zCoord);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var f = new Lab7Task2();
+            f.Show();
+        }
     }
 }
