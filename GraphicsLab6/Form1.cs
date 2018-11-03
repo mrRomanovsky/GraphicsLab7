@@ -786,6 +786,7 @@ namespace GraphicsLab6
         {
             //TODO: build polyhedron from points
             var polyhedron = new Polyhedron(PolyhedronType.Dodecahedron, -20);
+            polyhedron.vertexes.Clear();
             foreach (var point in points)
                 polyhedron.vertexes.Add(point);
             return polyhedron;
@@ -864,6 +865,21 @@ namespace GraphicsLab6
         {
             var f = new Lab7Task2();
             f.Show();
+        }
+
+        private void task1Button_Click(object sender, EventArgs e)
+        {
+            using (var pathForm = new Lab7Task1Path())
+            {
+                var dialogRes = pathForm.ShowDialog();
+                if (dialogRes == DialogResult.OK)
+                {
+                    var filePath = pathForm.FilePath;
+                    ReadPolyhedronFromFile(filePath);
+                    DrawPolyhedron(figure, pictureBox1.Size);
+                    pictureBox1.Invalidate();
+                }
+            }
         }
     }
 }

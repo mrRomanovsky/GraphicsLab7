@@ -54,6 +54,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lab7Task1Path.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lab7Task1Path.Designer.cs">
+      <DependentUpon>Lab7Task1Path.cs</DependentUpon>
+    </Compile>
     <Compile Include="Lab7Task2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,9 @@
     <Compile Include="Segment.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lab7Task1Path.resx">
+      <DependentUpon>Lab7Task1Path.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LineThroughCenter.resx">
       <DependentUpon>LineThroughCenter.cs</DependentUpon>
