@@ -66,6 +66,12 @@
     <Compile Include="Lab7Task2.Designer.cs">
       <DependentUpon>Lab7Task2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lab7task3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lab7task3.Designer.cs">
+      <DependentUpon>Lab7task3.cs</DependentUpon>
+    </Compile>
     <Compile Include="LineThroughCenter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Lab7Task1Path.resx">
       <DependentUpon>Lab7Task1Path.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lab7task3.resx">
+      <DependentUpon>Lab7task3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LineThroughCenter.resx">
       <DependentUpon>LineThroughCenter.cs</DependentUpon>

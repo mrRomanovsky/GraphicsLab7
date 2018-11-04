@@ -881,5 +881,11 @@ namespace GraphicsLab6
                 }
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var f = new Lab7task3();
+            f.Show();
+        }
     }
 }
