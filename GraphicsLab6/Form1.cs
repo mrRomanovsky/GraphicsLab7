@@ -21,12 +21,14 @@ namespace GraphicsLab6
         private Pen redPen = new Pen(Color.Red);
         private List<System.Windows.Forms.Panel> tasksPanels;
         private Edge polyhrdron2D;
+        public Size PictureBoxSize;
         public Form1()
         {
             InitializeComponent();
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             tasksPanels = new List<Panel>(7);
             InitializeTasksPanels();
+            PictureBoxSize = pictureBox1.Size;
         }
 
         private void InitializeTasksPanels()
@@ -62,7 +64,7 @@ namespace GraphicsLab6
             }
         }
 
-        private void DrawPolyhedron(Polyhedron polyhedron, Size size)
+        public void DrawPolyhedron(Polyhedron polyhedron, Size size)
         {
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             var res = new List<PointF>();
@@ -884,8 +886,13 @@ namespace GraphicsLab6
 
         private void button4_Click(object sender, EventArgs e)
         {
-            var f = new Lab7task3();
+            var f = new Lab7task3(this);
             f.Show();
+        }
+
+        public void getFigureFromChild(Polyhedron p)
+        {
+            figure = p;
         }
     }
 }
