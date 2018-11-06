@@ -45,7 +45,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(595, 426);
+            this.pictureBox1.Size = new System.Drawing.Size(595, 469);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -85,16 +85,18 @@
             "Задание 6",
             "Задание 7",
             "Задание 8",
-            "Задание 9"});
+            "Задание 9 XOY",
+            "Задание 9 YOZ",
+            "Задание 9 XOZ"});
             this.listBox2.Location = new System.Drawing.Point(622, 111);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(120, 108);
+            this.listBox2.Size = new System.Drawing.Size(120, 134);
             this.listBox2.TabIndex = 3;
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(657, 401);
+            this.button2.Location = new System.Drawing.Point(657, 458);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(85, 23);
             this.button2.TabIndex = 4;
@@ -122,7 +124,7 @@
             // 
             // task1Button
             // 
-            this.task1Button.Location = new System.Drawing.Point(44, 464);
+            this.task1Button.Location = new System.Drawing.Point(50, 487);
             this.task1Button.Name = "task1Button";
             this.task1Button.Size = new System.Drawing.Size(75, 23);
             this.task1Button.TabIndex = 8;
@@ -141,7 +143,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(274, 464);
+            this.button3.Location = new System.Drawing.Point(274, 487);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 10;
