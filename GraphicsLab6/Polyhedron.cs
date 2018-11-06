@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GraphicsLab6
 {
-    enum PolyhedronType
+    public enum PolyhedronType
     {
         Tetrahedron,
         Hexahedron,
@@ -29,7 +29,7 @@ namespace GraphicsLab6
     }
     
 
-    class Polyhedron
+    public class Polyhedron
     {
         public int CountVertex;
         public int CountSegment;
@@ -38,7 +38,7 @@ namespace GraphicsLab6
         public PointF CentrePoint;
         public int SegmentLength;
         public List<Point3D> vertexes;
-        public Point3D Centre { get; private set; }
+        public Point3D Centre { get; set; }
 
         public Polyhedron()
         {
