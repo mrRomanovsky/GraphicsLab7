@@ -44,6 +44,7 @@ namespace GraphicsLab6
         {
             vertexes = new List<Point3D>();
         }
+
         public Polyhedron(PolyhedronType type, int len)
         {
             var ss = SchlafliSymbol.schlafliSymbol[type.ToString()];

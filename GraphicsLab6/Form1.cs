@@ -151,6 +151,7 @@ namespace GraphicsLab6
 
         }
 
+        #region listbox
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach (var item in tasksPanels)
@@ -267,6 +268,7 @@ namespace GraphicsLab6
 
             }
         }
+        #endregion
 
         #region task234
         private List<string> activeItems = new List<string>();
@@ -771,23 +773,59 @@ namespace GraphicsLab6
         {
             var edgesLines = File.ReadAllLines(filepath);
             int edgeVertexCount = edgesLines[0].Split('|').Length - 1;
-            var edgesPoints = new Point3D[edgesLines.Length, edgeVertexCount - 1];
+            var edgesPoints = new Point3D[edgesLines.Length, edgeVertexCount];
+            for (int i = 0; i < edgesLines.Length; ++i)
+                for (int j = 0; j < edgeVertexCount; ++j)
+                    edgesPoints[i, j] = new Point3D();
             var edgesAdjacentPoints = new List<AdjacentPoints>[edgesLines.Length];
+            for (int i = 0; i < edgesLines.Length; ++i)
+                edgesAdjacentPoints[i] = new List<AdjacentPoints>();
             for (int i = 0; i < edgesLines.Length; ++i)
             {
                 var edgeInfo = SplitEdgeInfo(edgesLines[i]);
                 ParseEdge(edgeInfo.Item1, i, edgesPoints);
                 foreach (var adjacentEdgeInfo in edgeInfo.Item2.Split('E'))
-                    edgesAdjacentPoints[i].Add(ParseAdjacentPoints(adjacentEdgeInfo, i));
+                    if (adjacentEdgeInfo != "")
+                        edgesAdjacentPoints[i].Add(ParseAdjacentPoints(adjacentEdgeInfo, i));
             }
             AddAdjacentNeighbours(edgesPoints, edgesAdjacentPoints);
             figure = BuildPolyhedronFromPoints(edgesPoints);
+            var testList = new List<Tuple<double, double, double>>();
+            /*testList.Add(new Tuple<double, double, double>(1, 0, 2));
+            testList.Add(new Tuple<double, double, double>(2, 0, 1));
+            testList.Add(new Tuple<double, double, double>(1, 1, 3));*/
+            figure.vertexes = figure.vertexes.OrderBy(v => new Tuple<double, double, double>(v.X, v.Y, v.Z))
+                .ThenByDescending(v => v.Neighbours.Count).ToList();
+            var lastVertex = figure.vertexes.First();
+            var newVertexes = new List<Point3D>();
+            for (int i = 0; i < figure.vertexes.Count; ++i)
+            {
+                if (figure.vertexes[i].X != lastVertex.X || figure.vertexes[i].Y != lastVertex.Y || figure.vertexes[i].Z != lastVertex.Z)
+                {
+                    lastVertex.Neighbours = lastVertex.Neighbours.GroupBy(x => new Tuple<double, double, double>(x.X, x.Y, x.Z)).Select(x => x.First()).ToList();
+                    newVertexes.Add(lastVertex);
+                    lastVertex = figure.vertexes[i];
+                }
+                else if (lastVertex != figure.vertexes[i])
+                {
+                    foreach (var neighbour in figure.vertexes[i].Neighbours)
+                        lastVertex.Neighbours.Add(neighbour);
+                }
+            }
+            newVertexes.Add(lastVertex);
+            figure.CountVertex = figure.vertexes.GroupBy(x => Tuple.Create(x.X, x.Y, x.Z)).Count();
+            foreach (var v in newVertexes)
+            {
+                for (int i = 0; i < v.Neighbours.Count; ++i)
+                    v.Neighbours[i] = newVertexes.Find(vx => vx.X == v.Neighbours[i].X && vx.Y == v.Neighbours[i].Y && vx.Z == v.Neighbours[i].Z);
+            }
+            figure.vertexes = newVertexes;
         }
 
         private Polyhedron BuildPolyhedronFromPoints(Point3D[,] points)
         {
             //TODO: build polyhedron from points
-            var polyhedron = new Polyhedron(PolyhedronType.Dodecahedron, -20);
+            var polyhedron = new Polyhedron();
             polyhedron.vertexes.Clear();
             foreach (var point in points)
                 polyhedron.vertexes.Add(point);
@@ -840,7 +878,7 @@ namespace GraphicsLab6
         private void ParseEdge(string edgeStr, int edgeNumber, Point3D[,] pointsList)
         {
             var pointsAndAdjacentVertexStr = edgeStr.Split('|').ToArray();
-            for (int i = 0; i < pointsAndAdjacentVertexStr.Length - 1; ++i)
+            for (int i = 0; i < pointsAndAdjacentVertexStr.Length; ++i)
             {
                 pointsList[edgeNumber, i] = ParsePoint(pointsAndAdjacentVertexStr[i]);
                 if (i > 0)

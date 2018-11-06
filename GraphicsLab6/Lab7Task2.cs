@@ -16,5 +16,10 @@ namespace GraphicsLab6
         {
             InitializeComponent();
         }
+
+        private void build_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
